@@ -27,7 +27,6 @@ class QuizActivity : AppCompatActivity() {
     var count = 0;
     var correctCount = 0
     val chosen = arrayListOf<String>()
-    val correct = arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +37,10 @@ class QuizActivity : AppCompatActivity() {
 
         button_start.setOnClickListener {
             startTest()
+        }
+
+        button_result.setOnClickListener {
+            result_an.visibility = View.VISIBLE
         }
     }
 
@@ -65,18 +68,19 @@ class QuizActivity : AppCompatActivity() {
         finish_card.visibility = View.GONE
         button_start.visibility = View.GONE
         button_result.visibility = View.GONE
+        result_an.visibility = View.GONE
 
         object : CountDownTimer(1000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
                 counter.setText("Seconds Remaining: " + millisUntilFinished / 1000)
+                chosen.add(text_answer.text.toString())
             }
 
             override fun onFinish() {
                 answer_layout.removeAllViews()
                 count++
                 if (count <= 14) {
-                    chosen.add(text_answer.text.toString())
                     text_answer.text = ""
                     question_count.text = "Question " + (count + 1) + "/15"
                     question.text = questions.get(count).question
@@ -84,7 +88,7 @@ class QuizActivity : AppCompatActivity() {
                     createButtonDynamically(answers)
                     start()
                 } else {
-                    createAnalysisDynamically(questions)
+                    createAnalysisDynamically(questions, answerDao)
                     counter.setText("Finish!")
                     card_quiz.visibility = View.GONE
                     finish_card.visibility = View.VISIBLE
@@ -108,7 +112,9 @@ class QuizActivity : AppCompatActivity() {
         }.start()
     }
 
-    private fun createAnalysisDynamically(questions: List<Question>) {
+    private fun createAnalysisDynamically(questions: List<Question>, answerDao: AnswerDao) {
+        println(":::" + questions.size)
+        println("::::" + chosen.size)
         questions.forEachIndexed { idx, q ->
             val row = LinearLayout(this)
             row.layoutParams = LinearLayout.LayoutParams(
@@ -117,13 +123,13 @@ class QuizActivity : AppCompatActivity() {
             )
 
             val text = TextView(this)
-
-            text.text = q.question
+            text.text = q.question + "\nCorrect Answer: " + answerDao.getAllCorrectByQuestion(q.id, true)
+                .get(0).option + "\nYour Answer: " + chosen.get(idx)
             text.setTextColor(Color.BLACK)
             text.textSize = 8f
 
             row.addView(text)
-            results.addView(row)
+            result_an.addView(row)
         }
     }
 
@@ -143,8 +149,6 @@ class QuizActivity : AppCompatActivity() {
             )
             button.text = answer.option
             button.id = answer.id.toInt()
-
-            if (answer.correct) answer.option?.let { correct.add(it) }
 
             button.setOnClickListener {
                 if (answer.correct) correctCount++;
