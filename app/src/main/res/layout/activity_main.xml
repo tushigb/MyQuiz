@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-                android:text="Welcome to MyQuiz"
+                android:text="Welcome to Kotlin Quiz"
                 android:textColor="@color/black"
                 android:fontFamily="@font/rubik_font_family"
                 android:textSize="24sp"
@@ -267,14 +267,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/t3"
                 tools:ignore="MissingConstraints"/>
-
-<!--        <TextView-->
-<!--                android:id="@+id/hello_world"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Hello World!"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/t4"/>-->
 
         <Button
                 android:id="@+id/button_signin"

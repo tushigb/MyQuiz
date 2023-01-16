@@ -1,11 +1,13 @@
 package edu.miu.myquiz
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import androidx.room.Room
 import edu.miu.myquiz.entity.Answer
 import edu.miu.myquiz.entity.Question
+import edu.miu.myquiz.ui.QuizActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -116,26 +118,21 @@ class MainActivity : AppCompatActivity() {
             q15a1, q15a2, q15a3
         )
 
-        val questions: List<Question> = questionDao.getAll()
-        val answers: List<Answer> = answerDao.getAll()
-
-        println("::::" + questions.size)
-        println("::::" + answers.size)
-
-        for (q in questions) {
-            println("-----")
-            println(q)
+        button_signin.setOnClickListener {
+            startActivity(Intent(this, QuizActivity::class.java))
         }
 
-//        object : CountDownTimer(30000, 1000) {
+//        val questions: List<Question> = questionDao.getAll()
+//        val answers: List<Answer> = answerDao.getAll()
 //
-//            override fun onTick(millisUntilFinished: Long) {
-//                hello_world.setText("seconds remaining: " + millisUntilFinished / 1000)
-//            }
+//        println("::::" + questions.size)
+//        println("::::" + answers.size)
 //
-//            override fun onFinish() {
-//                hello_world.setText("done!")
-//            }
-//        }.start()
+//        for (q in questions) {
+//            println("-----")
+//            println(q)
+//        }
+
+
     }
 }

@@ -11,6 +11,9 @@ interface AnswerDao {
     @Query("SELECT * FROM _answer")
     fun getAll(): List<Answer>
 
+    @Query("SELECT * FROM _answer WHERE qid = :qid")
+    fun getAllByQuestion(qid: Long): List<Answer>
+
     @Insert
     fun insertAll(vararg answers: Answer)
 
