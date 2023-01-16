@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         val q2 = Question(2, "How do you insert COMMENTS in Kotlin code?")
         val q2a1 = Answer(4, 2, "/* This is a comment", false)
         val q2a2 = Answer(5, 2, "-- This is a comment", false)
-        val q2a3 = Answer(6, 2, "// This is a comment  ", true)
+        val q2a3 = Answer(6, 2, "// This is a comment", true)
 
         val q3 = Question(3, "Which keyword is used to declare a function?")
         val q3a1 = Answer(7, 3, "fun", true)
